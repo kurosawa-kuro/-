@@ -1,19 +1,21 @@
 require('dotenv').config();
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-const youtube_api = "AIzaSyBamG77fPrxng8AGGXT5syA6so2bcvt8xg"
-const url = `https://www.googleapis.com/youtube/v3/search`;
 
-const options: AxiosRequestConfig = {
-    url: `${url}`,
-    method: "GET",
-    params: {
-        part: 'snippet',
-        // q: keyword,
-        maxResults: 50,
-        key: process.env.YOUTUBE_API_KEY  // 取得したAPIキーを設定
-    }
-};
+
 async function fetch_youtube() {
+    const url = `https://www.googleapis.com/youtube/v3/search`;
+
+    const options: AxiosRequestConfig = {
+        url: `${url}`,
+        method: "GET",
+        params: {
+            part: 'snippet',
+            // q: keyword,
+            maxResults: 50,
+            key: process.env.YOUTUBE_API_KEY  // 取得したAPIキーを設定
+        }
+    };
+
     await axios(options)
         .then((res: AxiosResponse<any>) => {
             const { data, status } = res;
