@@ -1,6 +1,7 @@
+require('dotenv').config();
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-const API_KEY = 'AIzaSyBamG77fPrxng8AGGXT5syA6so2bcvt8xg'
-const url = `https://www.googleapis.com/youtube/v3/search?key=$${API_KEY}`;
+
+const url = `https://www.googleapis.com/youtube/v3/search?key=$${process.env.YOUTUBE_API_KEY}`;
 
 const options: AxiosRequestConfig = {
     url: `${url}`,
@@ -9,6 +10,8 @@ const options: AxiosRequestConfig = {
 
 async function app() {
     console.log("start app")
+    // console.log("rocess.env.YOUTUBE_API_KEY", process.env.YOUTUBE_API_KEY)
+
     await axios(options)
         .then((res: AxiosResponse<any>) => {
             const { data, status } = res;
