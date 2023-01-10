@@ -1,27 +1,36 @@
 require('dotenv').config();
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-
-const url = `https://www.googleapis.com/youtube/v3/search?key=$${process.env.YOUTUBE_API_KEY}`;
+const youtube_api = "AIzaSyBamG77fPrxng8AGGXT5syA6so2bcvt8xg"
+const url = `https://www.googleapis.com/youtube/v3/search`;
 
 const options: AxiosRequestConfig = {
     url: `${url}`,
     method: "GET",
+    params: {
+        part: 'snippet',
+        // q: keyword,
+        maxResults: 50,
+        key: process.env.YOUTUBE_API_KEY  // 取得したAPIキーを設定
+    }
 };
-
-async function app() {
-    console.log("start app")
-    // console.log("rocess.env.YOUTUBE_API_KEY", process.env.YOUTUBE_API_KEY)
-
+async function fetch_youtube() {
     await axios(options)
         .then((res: AxiosResponse<any>) => {
             const { data, status } = res;
             //やりたいことをやる
-            console.log({ data })
+            // console.log({ data })
+            console.log(data.items)
         })
         .catch((e: AxiosError<{ error: string }>) => {
             // エラー処理
             console.log(e.message);
         });
+}
+async function app() {
+    console.log("start app")
+    // console.log("rocess.env.YOUTUBE_API_KEY", process.env.YOUTUBE_API_KEY)
+    await fetch_youtube()
+
     console.log("end app")
 }
 
